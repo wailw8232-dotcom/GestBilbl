@@ -58,7 +58,7 @@ bibliotheque_Interface/
 
 ### Configuration
 
-Update the DB connection URL in `DBManager.java` (or `LoginForm.java`) if your MySQL server isn't running on `192.168.1.29:3306`:
+Update the DB connection URL in `DBManager.java` (or `LoginForm.java`) .
 
 ```java
 private static final String URL = "jdbc:mysql://<your-host>:3306/GestBibl";
