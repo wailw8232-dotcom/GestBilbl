@@ -1,8 +1,6 @@
 package bibliotheque_Interface;
 import javax.swing.*; 
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -93,11 +91,10 @@ public class PanelEtudiant extends JPanel {
         });
     }
 
-    // ===== LOAD SPECIALITES
+    // LOAD SPECIALITES
     private void chargerSpecialites() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM SPECIALITE");
 
@@ -114,11 +111,10 @@ public class PanelEtudiant extends JPanel {
         }
     }
 
-    // ===== LOAD ETUDIANTS =====
+    //  LOAD ETUDIANTS
     private void chargerEtudiants() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             String sql = "SELECT e.id_etudiant, e.nom, e.prenom, e.email, s.nom_specialite " +
                          "FROM ETUDIANT e LEFT JOIN SPECIALITE s ON e.id_specialite = s.id_specialite";
@@ -143,11 +139,10 @@ public class PanelEtudiant extends JPanel {
         }
     }
 
-    // ===== ADD =====
+    //ADD
     private void ajouterEtudiant() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             String selected = (String) specialiteCombo.getSelectedItem();
             int idSpecialite = mapSpecialite.get(selected);
@@ -170,7 +165,7 @@ public class PanelEtudiant extends JPanel {
         }
     }
 
-    // ===== UPDATE =====
+    // UPDATE 
     private void modifierEtudiant() {
         int row = table.getSelectedRow();
         if (row == -1) return;
@@ -178,8 +173,7 @@ public class PanelEtudiant extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             String selected = (String) specialiteCombo.getSelectedItem();
             int idSpecialite = mapSpecialite.get(selected);
@@ -202,7 +196,7 @@ public class PanelEtudiant extends JPanel {
         }
     }
 
-    // ===== DELETE =====
+    //  DELETE 
     private void supprimerEtudiant() {
         int row = table.getSelectedRow();
         if (row == -1) return;
@@ -210,8 +204,7 @@ public class PanelEtudiant extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             PreparedStatement pst = conn.prepareStatement("DELETE FROM ETUDIANT WHERE id_etudiant=?");
             pst.setInt(1, id);
@@ -225,10 +218,10 @@ public class PanelEtudiant extends JPanel {
         }
     }
 
-    // ===== SEARCH =====
+    // SEARCH
     private void rechercherEtudiant() {
         try {
-            Connection conn = DBConnection.getConnection();
+            Connection conn = DBManager.getConnection();
 
             String sql = "SELECT e.id_etudiant, e.nom, e.prenom, e.email, s.nom_specialite " +
                          "FROM ETUDIANT e LEFT JOIN SPECIALITE s ON e.id_specialite = s.id_specialite " +
