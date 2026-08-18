@@ -1,6 +1,5 @@
 package bibliotheque_Interface;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -75,8 +74,7 @@ public class PanelEmprunt extends JPanel {
     //requete select idmemoire
     private void chargerMemoire() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
             
             
             Statement st = conn.createStatement();
@@ -101,8 +99,7 @@ public class PanelEmprunt extends JPanel {
     private void chargerEtudiant() {
         try {
         	
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT id_etudiant, nom FROM ETUDIANT");
 
@@ -122,8 +119,7 @@ public class PanelEmprunt extends JPanel {
     // table EMPRUNT AVEC jointure 
     private void chargerEmprunts() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
             String sql =
                 "SELECT e.id_emprunt, m.titre, et.nom, e.date_emprunt, e.date_retour_prevue, e.statut " +
                 "FROM EMPRUNT e " +
@@ -164,8 +160,7 @@ public class PanelEmprunt extends JPanel {
     // requete insertion
     private void ajouterEmprunt() {
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             int idMemoire = mapMemoire.get((String) memoireCombo.getSelectedItem());
             int idEtudiant = mapEtudiant.get((String) etudiantCombo.getSelectedItem());
@@ -200,8 +195,7 @@ public class PanelEmprunt extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             String sql = "UPDATE EMPRUNT SET date_retour_reelle=?, statut='retourné' WHERE id_emprunt=?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -226,8 +220,7 @@ public class PanelEmprunt extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-        	LoginForm log = new LoginForm();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             PreparedStatement pst = conn.prepareStatement("DELETE FROM EMPRUNT WHERE id_emprunt=?");
             pst.setInt(1, id);
