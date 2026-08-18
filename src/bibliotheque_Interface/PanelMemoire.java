@@ -1,8 +1,6 @@
 package bibliotheque_Interface;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -34,7 +32,7 @@ public class PanelMemoire extends JPanel {
         table = new JTable(model);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // ===== FORM =====
+        // FORM 
         JPanel form = new JPanel();
 
         titreField = new JTextField(10);
@@ -96,7 +94,7 @@ public class PanelMemoire extends JPanel {
     // ===== LOAD SPECIALITES =====
     private void chargerSpecialites() {
         try {
-            Connection conn = DBConnection.getConnection();
+            Connection conn = DBManager.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM SPECIALITE");
 
@@ -116,9 +114,7 @@ public class PanelMemoire extends JPanel {
     // ===== LOAD MEMOIRES =====
     private void chargerMemoire() {
         try {
-        	LoginForm log = new LoginForm();
-        	log.login();
-            Connection conn = log.login();
+        	Connection conn = DBManager.getConnection();
 
             String sql =
                 "SELECT m.id_memoire, m.titre, m.auteur, m.annee, s.nom_specialite ," +
@@ -151,8 +147,7 @@ public class PanelMemoire extends JPanel {
     // ===== ADD =====
     private void ajouterMemoire() {
         try {
-            Connection conn = DBConnection.getConnection() ;
-
+            Connection conn = DBManager.getConnection();
             String selected = (String) specialiteCombo.getSelectedItem();
             int idSpecialite = mapSpecialite.get(selected);
 
@@ -182,7 +177,7 @@ public class PanelMemoire extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-            Connection conn = DBConnection.getConnection();
+            CConnection conn = DBManager.getConnection();
 
             String selected = (String) specialiteCombo.getSelectedItem();
             int idSpecialite = mapSpecialite.get(selected);
@@ -213,7 +208,7 @@ public class PanelMemoire extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-            Connection conn = DBConnection.getConnection();
+            Connection conn = DBManager.getConnection();
 
             PreparedStatement pst = conn.prepareStatement("DELETE FROM MEMOIRE WHERE id_memoire=?");
             pst.setInt(1, id);
@@ -230,7 +225,7 @@ public class PanelMemoire extends JPanel {
     // ===== SEARCH =====
     private void rechercherMemoire() {
         try {
-            Connection conn = DBConnection.getConnection();
+            Connection conn = DBManager.getConnection();
 
             String sql =
                 "SELECT m.id_memoire, m.titre, m.auteur, m.annee, s.nom_specialite, " +
