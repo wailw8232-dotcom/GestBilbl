@@ -1,10 +1,9 @@
 package bibliotheque_Interface;
 
-import javax.swing.*;
+
 import javax.swing.*;
 import java.awt.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 
 
 
