@@ -1,6 +1,9 @@
 package bibliotheque_Interface;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -177,7 +180,7 @@ public class PanelMemoire extends JPanel {
         int id = (int) model.getValueAt(row, 0);
 
         try {
-            CConnection conn = DBManager.getConnection();
+            Connection conn = DBManager.getConnection();
 
             String selected = (String) specialiteCombo.getSelectedItem();
             int idSpecialite = mapSpecialite.get(selected);
